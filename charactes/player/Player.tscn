@@ -1,8 +1,28 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://charactes/base.tscn" type="PackedScene" id=1]
 [ext_resource path="res://charactes/player/Player.gd" type="Script" id=2]
 [ext_resource path="res://assets/characters/sprite.0001.character.png" type="Texture" id=3]
+
+[sub_resource type="Animation" id=22]
+resource_name = "DashRight"
+
+[sub_resource type="Animation" id=9]
+resource_name = "Idle"
+length = 0.1
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 0 ]
+}
 
 [sub_resource type="Animation" id=3]
 resource_name = "JumpRight"
@@ -111,25 +131,86 @@ tracks/1/keys = {
 "values": [ 0, 1, 0 ]
 }
 
-[sub_resource type="AnimationNodeAnimation" id=4]
+[sub_resource type="AnimationNodeBlendSpace2D" id=23]
+
+[sub_resource type="AnimationNodeAnimation" id=10]
+animation = "Idle"
+
+[sub_resource type="AnimationNodeAnimation" id=11]
+animation = "Idle"
+
+[sub_resource type="AnimationNodeAnimation" id=12]
+animation = "Idle"
+
+[sub_resource type="AnimationNodeAnimation" id=13]
+animation = "Idle"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id=14]
+blend_point_0/node = SubResource( 10 )
+blend_point_0/pos = Vector2( 1, 0 )
+blend_point_1/node = SubResource( 11 )
+blend_point_1/pos = Vector2( 0, -1 )
+blend_point_2/node = SubResource( 12 )
+blend_point_2/pos = Vector2( -1, 0 )
+blend_point_3/node = SubResource( 13 )
+blend_point_3/pos = Vector2( 0, 1 )
+blend_mode = 1
+
+[sub_resource type="AnimationNodeAnimation" id=15]
 animation = "WalkRight"
 
+[sub_resource type="AnimationNodeAnimation" id=16]
+animation = "WalkLeft"
+
+[sub_resource type="AnimationNodeAnimation" id=17]
+animation = "WalkLeft"
+
+[sub_resource type="AnimationNodeAnimation" id=18]
+animation = "WalkRight"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id=19]
+blend_point_0/node = SubResource( 15 )
+blend_point_0/pos = Vector2( 1, 0 )
+blend_point_1/node = SubResource( 16 )
+blend_point_1/pos = Vector2( -1, 0 )
+blend_point_2/node = SubResource( 17 )
+blend_point_2/pos = Vector2( 0, -1 )
+blend_point_3/node = SubResource( 18 )
+blend_point_3/pos = Vector2( 0, 1 )
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=20]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=21]
+
 [sub_resource type="AnimationNodeStateMachine" id=5]
-states/JumpRight/node = SubResource( 4 )
-states/JumpRight/position = Vector2( 192, 58 )
-start_node = "JumpRight"
+states/Dash/node = SubResource( 23 )
+states/Dash/position = Vector2( 218, 173 )
+states/Idle/node = SubResource( 14 )
+states/Idle/position = Vector2( 192, 92 )
+states/Move/node = SubResource( 19 )
+states/Move/position = Vector2( 438, 92 )
+transitions = [ "Idle", "Move", SubResource( 20 ), "Move", "Idle", SubResource( 21 ) ]
+start_node = "Idle"
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=6]
 
+[sub_resource type="RectangleShape2D" id=8]
+extents = Vector2( 4, 4 )
+
 [node name="Player" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
+max_acceleration = 500
+max_speed = 100
+friction = 500
+attack_range = 15.0
 
 [node name="Sprite" parent="." index="0"]
 texture = ExtResource( 3 )
 hframes = 10
-frame = 1
 
 [node name="AnimationPlayer" parent="." index="3"]
+anims/DashRight = SubResource( 22 )
+anims/Idle = SubResource( 9 )
 anims/JumpRight = SubResource( 3 )
 anims/KnockBack = SubResource( 7 )
 anims/WalkLeft = SubResource( 2 )
@@ -138,12 +219,14 @@ anims/WalkRight = SubResource( 1 )
 [node name="AnimationTree" parent="." index="4"]
 tree_root = SubResource( 5 )
 anim_player = NodePath("../AnimationPlayer")
-active = true
 parameters/playback = SubResource( 6 )
+parameters/Dash/blend_position = Vector2( 0, 0 )
+parameters/Idle/blend_position = Vector2( 0, 0 )
+parameters/Move/blend_position = Vector2( 0, 0 )
 
 [node name="Camera2D" type="Camera2D" parent="." index="5"]
 current = true
 
 [node name="BaseCollision" parent="." index="6"]
-visible = false
-position = Vector2( 0, 7 )
+position = Vector2( 0, 8 )
+shape = SubResource( 8 )
