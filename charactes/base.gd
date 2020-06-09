@@ -26,7 +26,16 @@ var velocity = Vector2.ZERO
 var death = false
 var hitbox_size
 
+onready var animationPlayer = $AnimationPlayer 
+onready var animationTree = $AnimationTree
+onready var animationState = animationTree.get("parameters/playback")
 
+func _ready():
+	animationTree.active = true
+	
+	#AttackArea
+	change_attack_area()
+	
 func _physics_process(delta):
 	control(delta)
 	velocity = move_and_slide(velocity)
@@ -42,3 +51,8 @@ func attack():
 	
 func config_hitbox():
 	pass
+	
+func change_attack_area():
+	var shape = CircleShape2D.new()
+	shape.radius = attack_range
+	$AttackArea/AttackAreaShape.shape = shape
