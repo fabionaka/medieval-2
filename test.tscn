@@ -1,33 +1,57 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://assets/characters/sprite.0001.character.png" type="Texture" id=1]
 [ext_resource path="res://charactes/player/Player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://assets/Effects/EFFECT-001.png" type="Texture" id=3]
+[ext_resource path="res://Equips/Weapons/Spear.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Equips/Weapons/Sword.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Equips/Weapons/Bow.tscn" type="PackedScene" id=6]
 
 [node name="Node2D" type="Node2D"]
 
 [node name="sprite0001character" type="Sprite" parent="."]
+visible = false
 modulate = Color( 1, 1, 1, 0.498039 )
 position = Vector2( 0, 12 )
 texture = ExtResource( 1 )
 
 [node name="sprite0001character2" type="Sprite" parent="."]
+visible = false
 modulate = Color( 1, 1, 1, 0.498039 )
 position = Vector2( 0, -24 )
 texture = ExtResource( 1 )
 
 [node name="sprite0001character3" type="Sprite" parent="."]
+visible = false
 modulate = Color( 1, 1, 1, 0.498039 )
 position = Vector2( 0, 48 )
 texture = ExtResource( 1 )
 
 [node name="sprite0001character4" type="Sprite" parent="."]
+visible = false
 modulate = Color( 1, 1, 1, 0.498039 )
 position = Vector2( 0, 80 )
 texture = ExtResource( 1 )
 
 [node name="sprite0001character5" type="Sprite" parent="."]
+visible = false
 modulate = Color( 1, 1, 1, 0.498039 )
 position = Vector2( 0, -56 )
 texture = ExtResource( 1 )
 
-[node name="Player" parent="." instance=ExtResource( 2 )]
+[node name="EFFECT-001" type="Sprite" parent="."]
+position = Vector2( 0, 60 )
+texture = ExtResource( 3 )
+
+[node name="YSort" type="YSort" parent="."]
+
+[node name="Player" parent="YSort" instance=ExtResource( 2 )]
+
+[node name="Bow" parent="YSort" instance=ExtResource( 6 )]
+position = Vector2( -16, 32 )
+
+[node name="Spear" parent="YSort" instance=ExtResource( 4 )]
+position = Vector2( 24, 31.7951 )
+
+[node name="Sword" parent="YSort" instance=ExtResource( 5 )]
+position = Vector2( 0, 36 )

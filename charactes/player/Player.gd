@@ -1,10 +1,15 @@
 extends "res://charactes/base.gd"
 
+export (int) var max_dash_speed
+
+var dashed = false;
+var started_velocity = Vector2.ZERO
 
 func _ready():
 	pass
 
 func control(delta):
+	
 	match state : 
 		MOVE : 
 			move_state(delta)
@@ -29,6 +34,7 @@ func move_state(delta):
 		velocity = velocity.move_toward(input_vector * max_speed, max_acceleration * delta)
 		animationTree.set("parameters/Idle/blend_position", input_vector)
 		animationTree.set("parameters/Move/blend_position", input_vector)
+		animationTree.set("parameters/Dash/blend_position", input_vector)
 		animationState.travel("Move")
 	else : 
 		velocity = velocity.move_toward(Vector2.ZERO, delta * friction)
@@ -36,8 +42,40 @@ func move_state(delta):
 		
 	# states change
 	if Input.is_action_just_pressed("dash"):
+		started_velocity = velocity
 		state = DASH
 	if Input.is_action_just_pressed("attack"):
+		started_velocity = velocity
 		state = ATTACK
+		
+	if Input.is_action_just_pressed("ui_up"):
+		state = DAMAGE
+	if Input.is_action_just_pressed("ui_down"):
+		state = DEATH
+		
 
+func dash_state(delta):
+	animationState.travel("Dash")
+	if !dashed:
+		velocity = velocity * (max_dash_speed * delta)
+		dashed = true
+	
+func finish_dash_state():
+	velocity = started_velocity
+	state = MOVE
+	dashed = false
+	$EffectSprite.hide()
 
+func damage_state(delta):
+	animationState.travel("KnockBack")
+	if !dashed:
+		velocity = velocity/2
+		velocity = velocity * -1
+		dashed = true
+		
+func death_state(delta):
+	velocity = Vector2.ZERO
+	animationState.travel("Death")
+	
+func destroy():
+	queue_free()
