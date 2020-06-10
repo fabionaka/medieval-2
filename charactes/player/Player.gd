@@ -66,10 +66,15 @@ func finish_dash_state():
 	dashed = false
 	$EffectSprite.hide()
 
+func finish_damage_state():
+	print(velocity)
+	state = MOVE
+	dashed = false
+
 func damage_state(delta):
 	animationState.travel("KnockBack")
 	if !dashed:
-		velocity = velocity/2
+		velocity = velocity / knockback
 		velocity = velocity * -1
 		dashed = true
 		
@@ -79,3 +84,10 @@ func death_state(delta):
 	
 func destroy():
 	queue_free()
+
+func take_damage(damage, type):
+	# modificadores de dano
+	# diminuição de ponto e diminuoção de %
+	health -= damage
+	emit_signal("health_changed", health, damage)
+	state = DAMAGE

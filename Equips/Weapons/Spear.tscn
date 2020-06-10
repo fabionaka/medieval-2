@@ -6,6 +6,8 @@
 [node name="Spear" instance=ExtResource( 1 )]
 
 [node name="Sprite" parent="." index="0"]
+position = Vector2( 20, 0 )
+rotation = 1.57079
 texture = ExtResource( 2 )
 hframes = 3
 frame = 2

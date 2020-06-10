@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=2]
+[gd_scene load_steps=46 format=2]
 
 [ext_resource path="res://charactes/base.tscn" type="PackedScene" id=1]
 [ext_resource path="res://charactes/player/Player.gd" type="Script" id=2]
@@ -6,11 +6,14 @@
 [ext_resource path="res://assets/Effects/EFFECT-001.png" type="Texture" id=4]
 [ext_resource path="res://charactes/player/Hitbox.gd" type="Script" id=5]
 [ext_resource path="res://charactes/player/AttackArea.gd" type="Script" id=6]
+[ext_resource path="res://Equips/Weapons/Bow.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Equips/Weapons/Sword.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Equips/Weapons/Spear.tscn" type="PackedScene" id=9]
 
-[sub_resource type="RectangleShape2D" id=30]
+[sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 4, 4 )
 
-[sub_resource type="Animation" id=25]
+[sub_resource type="Animation" id=2]
 resource_name = "DashLeft"
 length = 0.25
 loop = true
@@ -102,7 +105,7 @@ tracks/6/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=31]
+[sub_resource type="Animation" id=3]
 resource_name = "DashRight"
 length = 0.25
 loop = true
@@ -194,7 +197,7 @@ tracks/6/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=38]
+[sub_resource type="Animation" id=4]
 resource_name = "Death"
 length = 1.5
 loop = true
@@ -238,7 +241,7 @@ tracks/2/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=32]
+[sub_resource type="Animation" id=5]
 resource_name = "Idle"
 length = 0.1
 loop = true
@@ -255,7 +258,7 @@ tracks/0/keys = {
 "values": [ 0, 0 ]
 }
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=6]
 length = 0.6
 loop = true
 step = 0.2
@@ -272,7 +275,7 @@ tracks/0/keys = {
 "values": [ 2, 3, 4, 0 ]
 }
 
-[sub_resource type="Animation" id=33]
+[sub_resource type="Animation" id=7]
 resource_name = "KnockBack"
 length = 0.2
 loop = true
@@ -300,11 +303,23 @@ tracks/1/keys = {
 "transitions": PoolRealArray( 1 ),
 "values": [ {
 "args": [  ],
-"method": "finish_dash_state"
+"method": "finish_damage_state"
 } ]
 }
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sprite:offset")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.05, 0.1, 0.15 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Vector2( 0, 0 ), Vector2( 1, 0 ), Vector2( -1, 0 ), Vector2( 1, 0 ) ]
+}
 
-[sub_resource type="Animation" id=34]
+[sub_resource type="Animation" id=8]
 length = 0.4
 loop = true
 step = 0.2
@@ -333,7 +348,7 @@ tracks/1/keys = {
 "values": [ 0, 1, 0 ]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=9]
 length = 0.4
 loop = true
 step = 0.2
@@ -362,111 +377,111 @@ tracks/1/keys = {
 "values": [ 0, 1, 0 ]
 }
 
-[sub_resource type="AnimationNodeAnimation" id=26]
+[sub_resource type="AnimationNodeAnimation" id=10]
 animation = "DashRight"
 
-[sub_resource type="AnimationNodeAnimation" id=27]
+[sub_resource type="AnimationNodeAnimation" id=11]
 animation = "DashLeft"
 
-[sub_resource type="AnimationNodeAnimation" id=28]
+[sub_resource type="AnimationNodeAnimation" id=12]
 animation = "DashRight"
 
-[sub_resource type="AnimationNodeAnimation" id=29]
+[sub_resource type="AnimationNodeAnimation" id=13]
 animation = "DashLeft"
 
-[sub_resource type="AnimationNodeBlendSpace2D" id=8]
-blend_point_0/node = SubResource( 26 )
+[sub_resource type="AnimationNodeBlendSpace2D" id=14]
+blend_point_0/node = SubResource( 10 )
 blend_point_0/pos = Vector2( 1, 0 )
-blend_point_1/node = SubResource( 27 )
+blend_point_1/node = SubResource( 11 )
 blend_point_1/pos = Vector2( -1, 0 )
-blend_point_2/node = SubResource( 28 )
+blend_point_2/node = SubResource( 12 )
 blend_point_2/pos = Vector2( 0, 1 )
-blend_point_3/node = SubResource( 29 )
+blend_point_3/node = SubResource( 13 )
 blend_point_3/pos = Vector2( 0, -1 )
 blend_mode = 1
 
-[sub_resource type="AnimationNodeAnimation" id=39]
+[sub_resource type="AnimationNodeAnimation" id=15]
 animation = "Death"
 
-[sub_resource type="AnimationNodeAnimation" id=9]
+[sub_resource type="AnimationNodeAnimation" id=16]
 animation = "Idle"
 
-[sub_resource type="AnimationNodeAnimation" id=10]
+[sub_resource type="AnimationNodeAnimation" id=17]
 animation = "Idle"
 
-[sub_resource type="AnimationNodeAnimation" id=11]
+[sub_resource type="AnimationNodeAnimation" id=18]
 animation = "Idle"
 
-[sub_resource type="AnimationNodeAnimation" id=12]
+[sub_resource type="AnimationNodeAnimation" id=19]
 animation = "Idle"
 
-[sub_resource type="AnimationNodeBlendSpace2D" id=13]
-blend_point_0/node = SubResource( 9 )
+[sub_resource type="AnimationNodeBlendSpace2D" id=20]
+blend_point_0/node = SubResource( 16 )
 blend_point_0/pos = Vector2( 1, 0 )
-blend_point_1/node = SubResource( 10 )
+blend_point_1/node = SubResource( 17 )
 blend_point_1/pos = Vector2( 0, -1 )
-blend_point_2/node = SubResource( 11 )
+blend_point_2/node = SubResource( 18 )
 blend_point_2/pos = Vector2( -1, 0 )
-blend_point_3/node = SubResource( 12 )
+blend_point_3/node = SubResource( 19 )
 blend_point_3/pos = Vector2( 0, 1 )
 blend_mode = 1
 
-[sub_resource type="AnimationNodeAnimation" id=35]
+[sub_resource type="AnimationNodeAnimation" id=21]
 animation = "KnockBack"
 
-[sub_resource type="AnimationNodeAnimation" id=14]
+[sub_resource type="AnimationNodeAnimation" id=22]
 animation = "WalkRight"
 
-[sub_resource type="AnimationNodeAnimation" id=15]
+[sub_resource type="AnimationNodeAnimation" id=23]
 animation = "WalkLeft"
 
-[sub_resource type="AnimationNodeAnimation" id=16]
+[sub_resource type="AnimationNodeAnimation" id=24]
 animation = "WalkLeft"
 
-[sub_resource type="AnimationNodeAnimation" id=17]
+[sub_resource type="AnimationNodeAnimation" id=25]
 animation = "WalkRight"
 
-[sub_resource type="AnimationNodeBlendSpace2D" id=18]
-blend_point_0/node = SubResource( 14 )
+[sub_resource type="AnimationNodeBlendSpace2D" id=26]
+blend_point_0/node = SubResource( 22 )
 blend_point_0/pos = Vector2( 1, 0 )
-blend_point_1/node = SubResource( 15 )
+blend_point_1/node = SubResource( 23 )
 blend_point_1/pos = Vector2( -1, 0 )
-blend_point_2/node = SubResource( 16 )
+blend_point_2/node = SubResource( 24 )
 blend_point_2/pos = Vector2( 0, -1 )
-blend_point_3/node = SubResource( 17 )
+blend_point_3/node = SubResource( 25 )
 blend_point_3/pos = Vector2( 0, 1 )
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=19]
+[sub_resource type="AnimationNodeStateMachineTransition" id=27]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=20]
+[sub_resource type="AnimationNodeStateMachineTransition" id=28]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=23]
+[sub_resource type="AnimationNodeStateMachineTransition" id=29]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=24]
+[sub_resource type="AnimationNodeStateMachineTransition" id=30]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=36]
+[sub_resource type="AnimationNodeStateMachineTransition" id=31]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=37]
+[sub_resource type="AnimationNodeStateMachineTransition" id=32]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=40]
+[sub_resource type="AnimationNodeStateMachineTransition" id=33]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=41]
+[sub_resource type="AnimationNodeStateMachineTransition" id=34]
 
-[sub_resource type="AnimationNodeStateMachine" id=21]
-states/Dash/node = SubResource( 8 )
+[sub_resource type="AnimationNodeStateMachine" id=35]
+states/Dash/node = SubResource( 14 )
 states/Dash/position = Vector2( 264, 283 )
-states/Death/node = SubResource( 39 )
+states/Death/node = SubResource( 15 )
 states/Death/position = Vector2( 81, 119 )
-states/Idle/node = SubResource( 13 )
+states/Idle/node = SubResource( 20 )
 states/Idle/position = Vector2( 264, 120 )
-states/KnockBack/node = SubResource( 35 )
+states/KnockBack/node = SubResource( 21 )
 states/KnockBack/position = Vector2( 264, 34 )
-states/Move/node = SubResource( 18 )
+states/Move/node = SubResource( 26 )
 states/Move/position = Vector2( 464, 120 )
-transitions = [ "Idle", "Move", SubResource( 19 ), "Move", "Idle", SubResource( 20 ), "Dash", "Idle", SubResource( 23 ), "Idle", "Dash", SubResource( 24 ), "Idle", "KnockBack", SubResource( 36 ), "KnockBack", "Idle", SubResource( 37 ), "Idle", "Death", SubResource( 40 ), "Death", "Idle", SubResource( 41 ) ]
+transitions = [ "Idle", "Move", SubResource( 27 ), "Move", "Idle", SubResource( 28 ), "Dash", "Idle", SubResource( 29 ), "Idle", "Dash", SubResource( 30 ), "Idle", "KnockBack", SubResource( 31 ), "KnockBack", "Idle", SubResource( 32 ), "Idle", "Death", SubResource( 33 ), "Death", "Idle", SubResource( 34 ) ]
 start_node = "Idle"
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=22]
+[sub_resource type="AnimationNodeStateMachinePlayback" id=36]
 
 [node name="Player" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
@@ -475,6 +490,7 @@ max_speed = 100
 friction = 500
 health = 100
 attack_range = 15.0
+knockback = 2.0
 max_dash_speed = 150
 
 [node name="EffectSprite" type="Sprite" parent="." index="0"]
@@ -486,14 +502,15 @@ hframes = 4
 
 [node name="BaseCollision" parent="." index="1"]
 position = Vector2( 0, 8 )
-shape = SubResource( 30 )
+shape = SubResource( 1 )
 
 [node name="Sprite" parent="." index="2"]
 scale = Vector2( 1, 1.07911 )
 texture = ExtResource( 3 )
+offset = Vector2( 1, 0 )
 flip_h = true
 hframes = 10
-frame = 8
+frame = 5
 
 [node name="Hitbox" parent="." index="3"]
 script = ExtResource( 5 )
@@ -502,22 +519,30 @@ script = ExtResource( 5 )
 script = ExtResource( 6 )
 
 [node name="AnimationPlayer" parent="." index="5"]
-anims/DashLeft = SubResource( 25 )
-anims/DashRight = SubResource( 31 )
-anims/Death = SubResource( 38 )
-anims/Idle = SubResource( 32 )
-anims/JumpRight = SubResource( 4 )
-anims/KnockBack = SubResource( 33 )
-anims/WalkLeft = SubResource( 34 )
-anims/WalkRight = SubResource( 7 )
+anims/DashLeft = SubResource( 2 )
+anims/DashRight = SubResource( 3 )
+anims/Death = SubResource( 4 )
+anims/Idle = SubResource( 5 )
+anims/JumpRight = SubResource( 6 )
+anims/KnockBack = SubResource( 7 )
+anims/WalkLeft = SubResource( 8 )
+anims/WalkRight = SubResource( 9 )
 
-[node name="AnimationTree" parent="." index="6"]
-tree_root = SubResource( 21 )
+[node name="Camera2D" type="Camera2D" parent="." index="6"]
+current = true
+
+[node name="AnimationTree" parent="." index="7"]
+tree_root = SubResource( 35 )
 anim_player = NodePath("../AnimationPlayer")
-parameters/playback = SubResource( 22 )
+parameters/playback = SubResource( 36 )
 parameters/Dash/blend_position = Vector2( 0, 0 )
 parameters/Idle/blend_position = Vector2( 0, 0 )
 parameters/Move/blend_position = Vector2( 0, 0 )
 
-[node name="Camera2D" type="Camera2D" parent="." index="7"]
-current = true
+[node name="Bow" parent="Hands/Primary" index="0" instance=ExtResource( 7 )]
+visible = false
+
+[node name="Sword" parent="Hands/Primary" index="1" instance=ExtResource( 8 )]
+visible = false
+
+[node name="Spear" parent="Hands/Primary" index="2" instance=ExtResource( 9 )]
