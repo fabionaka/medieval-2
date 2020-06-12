@@ -11,4 +11,4 @@ extends "res://charactes/AttackArea.gd"
 
 
 func update_attack_area():
-	print('oi')
+	pass

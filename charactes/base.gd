@@ -11,10 +11,11 @@ enum {
 
 # Scene Config
 export (int) var max_acceleration
-export (int) var  max_speed
+export (int) var max_speed
 export (int) var friction
 export (int) var health
 export (int) var attack_cooldown
+export (int) var detect_radius
 export (float) var attack_range
 export (float) var damage
 export (float) var knockback
@@ -70,3 +71,6 @@ func change_attack_area():
 	var shape = CircleShape2D.new()
 	shape.radius = attack_range
 	$AttackArea/AttackAreaShape.shape = shape
+	
+func destroy():
+	queue_free()

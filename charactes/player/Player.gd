@@ -6,7 +6,7 @@ var dashed = false;
 var started_velocity = Vector2.ZERO
 
 func _ready():
-	pass
+	add_to_group("player")
 
 func control(delta):
 	
@@ -48,10 +48,10 @@ func move_state(delta):
 		started_velocity = velocity
 		state = ATTACK
 		
-	if Input.is_action_just_pressed("ui_up"):
-		state = DAMAGE
-	if Input.is_action_just_pressed("ui_down"):
-		state = DEATH
+#	if Input.is_action_just_pressed("ui_up"):
+#		state = DAMAGE
+#	if Input.is_action_just_pressed("ui_down"):
+#		state = DEATH
 		
 
 func dash_state(delta):
@@ -67,7 +67,6 @@ func finish_dash_state():
 	$EffectSprite.hide()
 
 func finish_damage_state():
-	print(velocity)
 	state = MOVE
 	dashed = false
 
@@ -81,9 +80,6 @@ func damage_state(delta):
 func death_state(delta):
 	velocity = Vector2.ZERO
 	animationState.travel("Death")
-	
-func destroy():
-	queue_free()
 
 func take_damage(damage, type):
 	# modificadores de dano
