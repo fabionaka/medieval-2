@@ -7,9 +7,11 @@ var target_vector = Vector2.ZERO
 var wait_timer = 0
 var target_vector_auto = Vector2.ZERO
 var tic = true
+var path : = PoolVector2Array() setget set_path
 
 func _ready():
 	add_to_group("enemies")
+	set_process(false)
 
 
 
@@ -21,7 +23,6 @@ func _on_DetectRadius_body_exited(body):
 	if body == target: 
 		target = null
 		target_vector = Vector2.ZERO
-
 
 
 func control(delta):
@@ -41,6 +42,15 @@ func control(delta):
 			
 func move_state(delta):
 	
+	if target :
+		var nav = get_tree().get_root().get_node("Node2D").get_node("Navigation2D")
+		if path != nav.get_simple_path(target.global_position, global_position): 
+			path = nav.get_simple_path(target.global_position, global_position)
+			print($Line2D.global_position)
+			print(get_parent().position)
+			$Line2D.points = path
+#			
+	return
 	
 	if target :
 		target_vector = (target.global_position - global_position) * delta
@@ -90,4 +100,10 @@ func damage_state_end():
 func death_state(delta):
 	velocity = Vector2.ZERO
 	animationState.travel("Death")
+
+func set_path(value: PoolVector2Array) -> void:
+	path = value
 	
+	if value.size() == 0:
+		return
+	set_process(true)
